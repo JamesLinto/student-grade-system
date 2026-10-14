@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grade Tracker - Array Data Structure</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f9; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { color: #003366; font-size: 24px; text-align: center; }
+        p.desc { font-size: 14px; color: #666; text-align: center; margin-bottom: 25px; }
+        .form-group { display: flex; gap: 10px; margin-bottom: 15px; }
+        input { flex: 1; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; }
+        button { padding: 10px 20px; background: #003366; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #002244; }
+        .stats { background: #eef2f7; padding: 15px; border-radius: 4px; margin-top: 20px; }
+        .stats p { margin: 5px 0; font-weight: bold; }
+        ul { list-style-type: none; padding: 0; margin-top: 15px; max-height: 150px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px; }
+        li { padding: 8px 12px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+        .footer { text-align: center; font-size: 12px; color: #aaa; margin-top: 30px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Student Grade Record System</h1>
+    <p class="desc">Real-World Application Powered by Arrays</p>
+
+    <div class="form-group">
+        <input type="number" id="scoreInput" placeholder="Enter student score (0-100)" min="0" max="100">
+        <button onclick="addScore()">Add Score</button>
+    </div>
+
+    <div class="stats">
+        <p>Total Students Recorded: <span id="count">0</span></p>
+        <p>Class Average Score: <span id="average">0.0</span></p>
+        <p>Highest Score: <span id="highest">0</span></p>
+    </div>
+
+    <h3>Stored Scores Array:</h3>
+    <ul id="scoreList">
+        <li style="color: #888; justify-content: center;">No scores added yet.</li>
+    </ul>
+
+    <div class="footer">Data Structures Array Demonstration</div>
+</div>
+
+<script>
+    let scoresArray = [];
+
+    function addScore() {
+        const inputField = document.getElementById('scoreInput');
+        const scoreValue = parseInt(inputField.value);
+
+        if (isNaN(scoreValue) || scoreValue < 0 || scoreValue > 100) {
+            alert("Please enter a valid score between 0 and 100.");
+            return;
+        }
+
+        scoresArray.push(scoreValue);
+        inputField.value = '';
+        updateDisplay();
+    }
+
+    function updateDisplay() {
+        const listElement = document.getElementById('scoreList');
+        const countElement = document.getElementById('count');
+        const avgElement = document.getElementById('average');
+        const highElement = document.getElementById('highest');
+
+        countElement.innerText = scoresArray.length;
+
+        if (scoresArray.length === 0) {
+            listElement.innerHTML = '<li style="color: #888; justify-content: center;">No scores added yet.</li>';
+            avgElement.innerText = "0.0";
+            highElement.innerText = "0";
+            return;
+        }
+
+        let htmlContent = '';
+        let sum = 0;
+        let highest = scoresArray[0];
+
+        for (let i = 0; i < scoresArray.length; i++) {
+            htmlContent += `<li><span>Index [${i}]</span> <strong>${scoresArray[i]}</strong></li>`;
+            sum += scoresArray[i];
+            if (scoresArray[i] > highest) highest = scoresArray[i];
+        }
+
+        listElement.innerHTML = htmlContent;
+        avgElement.innerText = (sum / scoresArray.length).toFixed(2);
+        highElement.innerText = highest;
+    }
+</script>
+
+</body>
+</html>
